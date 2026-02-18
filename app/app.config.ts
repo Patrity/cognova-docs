@@ -26,9 +26,14 @@ export default defineAppConfig({
     }]
   },
   footer: {
-    credits: `© ${new Date().getFullYear()} Cognova. Open source under MIT.`,
+    credits: `© ${new Date().getFullYear()} Cognova.`,
     colorMode: false,
     links: [{
+      'icon': 'i-simple-icons-x',
+      'to': 'https://x.com/patrity',
+      'target': '_blank',
+      'aria-label': 'Follow on X'
+    }, {
       'icon': 'i-simple-icons-github',
       'to': 'https://github.com/patrity/cognova',
       'target': '_blank',

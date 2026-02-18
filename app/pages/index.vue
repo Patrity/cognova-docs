@@ -1,15 +1,15 @@
 <script setup lang="ts">
 useSeoMeta({
   titleTemplate: '',
-  title: 'Cognova - Open Source AI Agent Platform with Encrypted Security',
-  ogTitle: 'Cognova - Open Source AI Agent Platform with Encrypted Security',
-  description: 'A self-hosted AI knowledge workspace with scheduled agents, document management, encrypted secrets, and extensible skills. The secure, token-efficient open source AI platform.',
-  ogDescription: 'A self-hosted AI knowledge workspace with scheduled agents, document management, encrypted secrets, and extensible skills. The secure, token-efficient open source AI platform.'
+  title: 'Cognova - Open Source AI Agent Platform with Encrypted Secret Management',
+  ogTitle: 'Cognova - Open Source AI Agent Platform with Encrypted Secret Management',
+  description: 'A self-hosted AI knowledge workspace with scheduled agents, document management, encrypted secrets, and extensible skills. A token-efficient open source AI platform.',
+  ogDescription: 'A self-hosted AI knowledge workspace with scheduled agents, document management, encrypted secrets, and extensible skills. A token-efficient open source AI platform.'
 })
 
 defineOgImageComponent('Docs', {
   title: 'Cognova',
-  description: 'Open Source AI Agent Platform with Encrypted Security'
+  description: 'Open Source AI Agent Platform with Encrypted Secret Management'
 })
 
 const features = [
@@ -177,7 +177,7 @@ const sidebarItems = [
       </template>
 
       <template #description>
-        An open-source platform that unifies document management, AI agents, and encrypted security — so you can focus on building, not configuring.
+        An open-source platform that unifies document management, AI agents, and encrypted secret management — so you can focus on building, not configuring.
       </template>
 
       <!-- Hero screenshot mock -->
@@ -272,7 +272,7 @@ const sidebarItems = [
     <UPageSection
       headline="Features"
       title="Everything you need in one workspace"
-      description="Cognova brings AI agents, document management, and encrypted security together in a single self-hosted platform — built for developers and power users who want full control."
+      description="Cognova brings AI agents, document management, and encrypted secret management together in a single self-hosted platform — built for developers and power users who want full control."
     >
       <UPageGrid>
         <UPageCard
@@ -323,8 +323,8 @@ const sidebarItems = [
     <!-- ============================================ -->
     <UPageSection
       headline="Security"
-      title="Built secure from day one"
-      description="Other AI agent platforms store your API keys in plaintext JSON files, exposing credentials to prompt injection attacks and supply chain vulnerabilities. Cognova encrypts everything with AES-256-GCM before it touches the database."
+      title="Secrets encrypted from day one"
+      description="Other AI agent platforms store your API keys in plaintext JSON files, exposing credentials to supply chain vulnerabilities. Cognova encrypts all secrets with AES-256-GCM before they touch the database."
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         <!-- Status quo card -->
@@ -424,10 +424,30 @@ const sidebarItems = [
           color: 'neutral' as const,
           variant: 'subtle' as const,
           size: 'xl' as const
+        },
+        {
+          label: 'Follow on X',
+          to: 'https://x.com/patrity',
+          target: '_blank',
+          icon: 'i-simple-icons-x',
+          color: 'neutral' as const,
+          variant: 'ghost' as const,
+          size: 'xl' as const
         }
       ]"
     >
       <LazyStarsBg />
     </UPageCTA>
+
+    <!-- Built by -->
+    <div class="text-center py-4 text-sm text-muted">
+      Built by <NuxtLink
+        to="https://techhivelabs.net"
+        target="_blank"
+        class="text-primary hover:underline"
+      >
+        TechHive Labs
+      </NuxtLink>
+    </div>
   </div>
 </template>

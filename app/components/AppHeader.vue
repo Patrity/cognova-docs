@@ -4,6 +4,16 @@ import type { ContentNavigationItem } from '@nuxt/content'
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { header } = useAppConfig()
+
+const { data: version } = await useFetch<string>(
+  'https://api.github.com/repos/patrity/cognova/releases/latest',
+  {
+    key: 'cognova-version',
+    transform: data => (data as unknown as { tag_name: string }).tag_name?.replace(/^v/, '') || '0.1.0',
+    getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] || nuxtApp.static.data[key],
+    default: () => '0.1.0'
+  }
+)
 </script>
 
 <template>
@@ -38,8 +48,17 @@ const { header } = useAppConfig()
       v-else
       #left
     >
-      <NuxtLink :to="header?.to || '/'">
-        <AppLogo class="w-auto h-6 shrink-0" />
+      <NuxtLink
+        :to="header?.to || '/'"
+        class="flex items-center gap-2"
+      >
+        <AppLogo class="w-auto h-10" />
+        <UBadge
+          variant="subtle"
+          size="sm"
+        >
+          v{{ version }}
+        </UBadge>
       </NuxtLink>
     </template>
 
