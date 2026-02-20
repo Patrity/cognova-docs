@@ -1,4 +1,15 @@
 <script setup lang="ts">
+const installCommand = 'curl -fsSL https://cognova.dev/install.sh | sh'
+const copied = ref(false)
+
+function copyInstallCommand() {
+  navigator.clipboard.writeText(installCommand)
+  copied.value = true
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
+}
+
 useSeoMeta({
   titleTemplate: '',
   title: 'Cognova - Open Source AI Agent Platform with Encrypted Secret Management',
@@ -179,6 +190,45 @@ const sidebarItems = [
       <template #description>
         An open-source platform that unifies document management, AI agents, and encrypted secret management — so you can focus on building, not configuring.
       </template>
+
+      <!-- Install one-liner terminal -->
+      <div class="mt-8 max-w-2xl mx-auto w-full">
+        <div class="rounded-xl overflow-hidden border border-default bg-[#0d1117] shadow-lg">
+          <!-- Terminal title bar -->
+          <div class="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-white/5">
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1.5">
+                <div class="size-3 rounded-full bg-[#ff5f57]" />
+                <div class="size-3 rounded-full bg-[#febc2e]" />
+                <div class="size-3 rounded-full bg-[#28c840]" />
+              </div>
+              <span class="text-xs text-gray-500 ml-2 font-mono">Terminal</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-[11px] text-gray-500">macOS / Linux / WSL</span>
+              <button
+                class="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors cursor-pointer"
+                @click="copyInstallCommand"
+              >
+                <UIcon
+                  :name="copied ? 'i-lucide-check' : 'i-lucide-copy'"
+                  class="size-3.5"
+                />
+                {{ copied ? 'Copied!' : 'Copy' }}
+              </button>
+            </div>
+          </div>
+          <!-- Terminal body -->
+          <div class="px-5 py-4 font-mono text-sm leading-relaxed">
+            <div class="text-gray-500">
+              # Works everywhere. Installs everything.
+            </div>
+            <div class="mt-1">
+              <span class="text-gray-500">$ </span><span class="text-gray-200">curl -fsSL https://cognova.dev/install.sh | sh</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Hero screenshot mock -->
       <UPageCard

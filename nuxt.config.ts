@@ -45,6 +45,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/skills': { prerender: true },
+    '/skills/**': { swr: 3600 },
     '/getting-started/**': { prerender: true },
     '/guide/**': { prerender: true },
     '/claude/**': { prerender: true },
@@ -86,7 +87,7 @@ export default defineNuxtConfig({
     description: 'Documentation for Cognova, an open-source AI-powered knowledge workspace with encrypted security, scheduled agents, and extensible skills.',
     full: {
       title: 'Cognova - Full Documentation',
-      description: 'Complete documentation for Cognova including getting started, user guide, Claude integration, self-hosting, API reference, and architecture.'
+      description: 'Complete documentation for Cognova including getting started, user guide, Claude integration, API reference, and architecture.'
     },
     sections: [
       {
