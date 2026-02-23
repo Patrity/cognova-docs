@@ -46,10 +46,7 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/skills': { prerender: true },
     '/skills/**': { swr: 3600 },
-    '/getting-started/**': { prerender: true },
-    '/guide/**': { prerender: true },
-    '/claude/**': { prerender: true },
-    '/api/**': { prerender: true }
+    '/docs/**': { prerender: true }
   },
 
   experimental: {
@@ -94,28 +91,28 @@ export default defineNuxtConfig({
         title: 'Getting Started',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/getting-started%' }
+          { field: 'path', operator: 'LIKE', value: '/docs/getting-started%' }
         ]
       },
       {
         title: 'User Guide',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/guide%' }
+          { field: 'path', operator: 'LIKE', value: '/docs/guide%' }
         ]
       },
       {
         title: 'Claude Integration',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/claude%' }
+          { field: 'path', operator: 'LIKE', value: '/docs/claude%' }
         ]
       },
       {
         title: 'API Reference',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/api%' }
+          { field: 'path', operator: 'LIKE', value: '/docs/api%' }
         ]
       }
     ]

@@ -156,7 +156,7 @@ const sidebarItems = [
       :links="[
         {
           label: 'Get Started',
-          to: '/getting-started/installation',
+          to: '/docs/getting-started/installation',
           icon: 'i-lucide-rocket',
           size: 'xl' as const
         },
@@ -462,7 +462,7 @@ const sidebarItems = [
       :links="[
         {
           label: 'Get Started',
-          to: '/getting-started/installation',
+          to: '/docs/getting-started/installation',
           icon: 'i-lucide-rocket',
           size: 'xl' as const
         },
