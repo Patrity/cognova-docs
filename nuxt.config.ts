@@ -44,7 +44,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
-    '/skills': { prerender: true },
+    '/skills': { swr: 3600 },
     '/skills/**': { swr: 3600 },
     '/docs/**': { prerender: true }
   },

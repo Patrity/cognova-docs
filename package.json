@@ -45,6 +45,11 @@
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.4"
   },
+  "pnpm": {
+    "overrides": {
+      "nuxt-og-image": "^5.1.13"
+    }
+  },
   "packageManager": "pnpm@10.28.1",
   "version": "0.1.0"
 }
