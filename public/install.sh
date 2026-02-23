@@ -262,14 +262,50 @@ else
   fi
 fi
 
-# ─── Docker (informational) ─────────────────────────────
+# ─── Docker (optional) ─────────────────────────────────
 step "Checking Docker (optional)"
+
+install_docker() {
+  case "$PLATFORM" in
+    macos)
+      info "Installing Docker Desktop via Homebrew..."
+      brew install --cask docker
+      info "Docker Desktop installed — open it from Applications to finish setup"
+      ;;
+    linux|wsl)
+      info "Installing Docker Engine..."
+      if [ "$PKG_MANAGER" = "apt" ]; then
+        run_sudo apt-get update -qq
+        run_sudo apt-get install -y -qq docker.io docker-compose-plugin
+      elif [ "$PKG_MANAGER" = "dnf" ]; then
+        run_sudo dnf install -y -q docker docker-compose-plugin
+      elif [ "$PKG_MANAGER" = "pacman" ]; then
+        run_sudo pacman -S --noconfirm docker docker-compose
+      fi
+      run_sudo systemctl enable --now docker 2>/dev/null || true
+      if [ -n "$NEED_SUDO" ]; then
+        run_sudo usermod -aG docker "$(whoami)" 2>/dev/null || true
+        info "Added $(whoami) to docker group (log out and back in to take effect)"
+      fi
+      ;;
+  esac
+}
 
 if command_exists docker; then
   ok "Docker available (for local PostgreSQL)"
 else
-  info "Docker not found — you can use a remote PostgreSQL instead"
-  info "The setup wizard will let you choose during init"
+  info "Docker not found — needed only for local PostgreSQL"
+  if confirm "Install Docker? (skip to use a remote database instead)"; then
+    install_docker
+    if command_exists docker; then
+      ok "Docker installed"
+    else
+      warn "Docker installed but may need a restart to be available"
+      info "You can still use a remote PostgreSQL during setup"
+    fi
+  else
+    info "Skipped — the setup wizard will let you use a remote database"
+  fi
 fi
 
 # ─── Install Cognova ────────────────────────────────────
@@ -300,4 +336,10 @@ printf "${BOLD}  Prerequisites ready — starting setup wizard${RESET}\n"
 printf "${BOLD}${CYAN}──────────────────────────────────────────${RESET}\n"
 printf "\n"
 
-cognova init
+# Reattach stdin to the terminal so @clack/prompts gets a real TTY
+# (when piped via curl | sh, stdin is the pipe and hits EOF)
+if [ ! -t 0 ] && [ -e /dev/tty ]; then
+  cognova init < /dev/tty
+else
+  cognova init
+fi
