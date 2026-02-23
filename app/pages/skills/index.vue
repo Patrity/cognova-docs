@@ -10,7 +10,8 @@ useSeoMeta({
   ogDescription: 'Discover, share, and install community-built skills for Cognova. Extend your AI workspace with integrations for Discord, Telegram, Slack, and more.'
 })
 
-defineOgImageComponent('Docs', {
+defineOgImage({
+  component: 'Docs',
   headline: 'Skills',
   title: 'Skills Repository',
   description: 'Discover, share, and install community-built skills for Cognova.'

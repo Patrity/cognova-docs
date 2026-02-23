@@ -21,7 +21,8 @@ useSeoMeta({
   ogDescription: () => skill.value?.description || ''
 })
 
-defineOgImageComponent('Docs', {
+defineOgImage({
+  component: 'Docs',
   headline: 'Skill',
   title: skillName.value,
   description: 'Community skill for Cognova'
