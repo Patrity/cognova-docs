@@ -52,6 +52,10 @@ confirm() {
 
 command_exists() { command -v "$1" >/dev/null 2>&1; }
 
+check_docker_daemon() {
+  docker info >/dev/null 2>&1
+}
+
 version_ge() {
   actual_major=$(echo "$1" | sed 's/^v//' | cut -d. -f1)
   required_major="$2"
@@ -270,7 +274,22 @@ install_docker() {
     macos)
       info "Installing Docker Desktop via Homebrew..."
       brew install --cask docker
-      info "Docker Desktop installed — open it from Applications to finish setup"
+      info "Starting Docker Desktop..."
+      open -a Docker
+
+      # Wait for daemon to be ready (up to 30 seconds)
+      printf "  Waiting for Docker daemon"
+      for i in $(seq 1 30); do
+        if check_docker_daemon; then
+          printf " ✓\n"
+          return 0
+        fi
+        printf "."
+        sleep 1
+      done
+      printf "\n"
+      warn "Docker Desktop is starting but not yet ready"
+      info "It may need a few more moments to initialize"
       ;;
     linux|wsl)
       info "Installing Docker Engine..."
@@ -282,7 +301,17 @@ install_docker() {
       elif [ "$PKG_MANAGER" = "pacman" ]; then
         run_sudo pacman -S --noconfirm docker docker-compose
       fi
+
+      info "Starting Docker daemon..."
       run_sudo systemctl enable --now docker 2>/dev/null || true
+
+      # Wait a moment for daemon to start
+      sleep 2
+      if ! check_docker_daemon; then
+        warn "Docker daemon may not be running"
+        info "Try: sudo systemctl start docker"
+      fi
+
       if [ -n "$NEED_SUDO" ]; then
         run_sudo usermod -aG docker "$(whoami)" 2>/dev/null || true
         info "Added $(whoami) to docker group (log out and back in to take effect)"
@@ -292,13 +321,52 @@ install_docker() {
 }
 
 if command_exists docker; then
-  ok "Docker available (for local PostgreSQL)"
+  if check_docker_daemon; then
+    ok "Docker daemon running (for local PostgreSQL)"
+  else
+    warn "Docker installed but daemon is not running"
+    if confirm "Start Docker daemon now?"; then
+      if [ "$PLATFORM" = "macos" ]; then
+        info "Starting Docker Desktop..."
+        open -a Docker
+        printf "  Waiting for Docker daemon"
+        for i in $(seq 1 30); do
+          if check_docker_daemon; then
+            printf " ✓\n"
+            ok "Docker daemon running"
+            break
+          fi
+          printf "."
+          sleep 1
+        done
+        if ! check_docker_daemon; then
+          printf "\n"
+          warn "Docker Desktop is starting but not yet ready"
+          info "Open Docker Desktop from Applications to finish setup"
+        fi
+      else
+        run_sudo systemctl start docker 2>/dev/null || true
+        sleep 2
+        if check_docker_daemon; then
+          ok "Docker daemon running"
+        else
+          warn "Could not start Docker daemon automatically"
+          info "Try: sudo systemctl start docker"
+        fi
+      fi
+    else
+      info "You can use a remote PostgreSQL during setup instead"
+    fi
+  fi
 else
   info "Docker not found — needed only for local PostgreSQL"
   if confirm "Install Docker? (skip to use a remote database instead)"; then
     install_docker
-    if command_exists docker; then
-      ok "Docker installed"
+    if command_exists docker && check_docker_daemon; then
+      ok "Docker installed and running"
+    elif command_exists docker; then
+      warn "Docker installed but daemon not ready yet"
+      info "You can still use a remote PostgreSQL during setup"
     else
       warn "Docker installed but may need a restart to be available"
       info "You can still use a remote PostgreSQL during setup"
