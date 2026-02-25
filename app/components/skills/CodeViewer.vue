@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Codemirror } from 'vue-codemirror'
-import { EditorView } from '@codemirror/view'
+import { EditorView } from 'codemirror'
 import { python } from '@codemirror/lang-python'
 import { markdown } from '@codemirror/lang-markdown'
 import { json } from '@codemirror/lang-json'

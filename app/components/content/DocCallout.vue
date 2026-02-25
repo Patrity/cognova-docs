@@ -6,7 +6,7 @@ interface Props {
 
 defineProps<Props>()
 
-const config: Record<string, { color: 'info' | 'warning' | 'success' | 'error', icon: string }> = {
+const config: Record<'info' | 'warning' | 'tip' | 'danger', { color: 'info' | 'warning' | 'success' | 'error', icon: string }> = {
   info: { color: 'info', icon: 'i-lucide-info' },
   warning: { color: 'warning', icon: 'i-lucide-alert-triangle' },
   tip: { color: 'success', icon: 'i-lucide-lightbulb' },

@@ -21,8 +21,7 @@ useSeoMeta({
   ogDescription: () => skill.value?.description || ''
 })
 
-defineOgImage({
-  component: 'Docs',
+defineOgImageComponent('Docs', {
   headline: 'Skill',
   title: skillName.value,
   description: 'Community skill for Cognova'
@@ -36,7 +35,7 @@ async function loadSkill() {
 
     if (skill.value?.files.length) {
       const defaultFile = skill.value.files.find(f => f === 'SKILL.md') || skill.value.files[0]
-      await selectFile(defaultFile)
+      if (defaultFile) await selectFile(defaultFile)
     }
   } catch {
     skill.value = null

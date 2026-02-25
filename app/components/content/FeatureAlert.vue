@@ -6,7 +6,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const alertConfig: Record<string, { color: 'success' | 'info' | 'warning' | 'error', icon: string, defaultTitle: string }> = {
+const alertConfig: Record<'complete' | 'planned' | 'in-progress' | 'deprecated', { color: 'success' | 'info' | 'warning' | 'error', icon: string, defaultTitle: string }> = {
   'complete': {
     color: 'success',
     icon: 'i-lucide-check-circle',

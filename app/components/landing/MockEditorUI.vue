@@ -11,7 +11,7 @@
       <div class="ml-auto flex items-center gap-2">
         <UBadge
           variant="subtle"
-          color="green"
+          color="success"
           size="xs"
         >
           Saved

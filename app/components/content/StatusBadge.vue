@@ -5,7 +5,7 @@ interface Props {
 
 defineProps<Props>()
 
-const statusConfig: Record<string, { label: string, color: 'success' | 'info' | 'warning' | 'error', icon: string }> = {
+const statusConfig: Record<'complete' | 'planned' | 'in-progress' | 'deprecated', { label: string, color: 'success' | 'info' | 'warning' | 'error', icon: string }> = {
   'complete': { label: 'Complete', color: 'success', icon: 'i-lucide-check-circle' },
   'planned': { label: 'Planned', color: 'info', icon: 'i-lucide-clock' },
   'in-progress': { label: 'In Progress', color: 'warning', icon: 'i-lucide-loader' },
