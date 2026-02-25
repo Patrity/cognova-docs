@@ -1,5 +1,6 @@
 import { withLeadingSlash } from 'ufo'
 import { stringify } from 'minimark/stringify'
+import type { MinimarkNode } from 'minimark'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections } from '@nuxt/content'
 
@@ -18,8 +19,8 @@ export default eventHandler(async (event) => {
 
   // Add title and description to the top of the page if missing
   if (page.body.value[0]?.[0] !== 'h1') {
-    page.body.value.unshift(['blockquote', {}, page.description])
-    page.body.value.unshift(['h1', {}, page.title])
+    page.body.value.unshift(['blockquote', {}, page.description || ''] as MinimarkNode)
+    page.body.value.unshift(['h1', {}, page.title || ''] as MinimarkNode)
   }
 
   setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
